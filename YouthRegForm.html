@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Online Information Website For Youth</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin:0px;
+  background-color:white;
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: 100% 100%;
+  color:black;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input[type=text] {
+  width: 100%;
+  height: 40px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  box-sizing: border-box;
+  color: black;
+  text-align: center;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+  font-size: 16px;
+}
+
+input[type=submit] {
+  background-color: #004680;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  float: center;
+  margin: 20px 0;
+  width: 30%;
+}
+
+input[type=submit]:hover {
+  background-color: #1b3c57;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+.jumbotron {
+  background-color: #2d2d30;
+  color: #fff;
+  padding: 100px 25px;
+  font-family: Montserrat, sans-serif;
+}
+
+.navbar {
+  font-family: Montserrat, sans-serif;
+  margin-bottom: 0;
+  background-color: #2d2d30;
+  border: 0;
+  font-size: 11px;
+  letter-spacing: 4px;
+  opacity: 0.9;
+}
+
+.navbar li a, .navbar .navbar-brand { 
+  color: #d5d5d5;
+}
+
+.navbar-nav li a:hover {
+  color: #fff;
+}
+
+.navbar-nav li.active a {
+  color: #fff;
+  background-color: #29292c;
+}
+
+.navbar-default .navbar-toggle {
+  border-color: transparent;
+}
+
+.dropdown-menu li a {
+  color: #000;
+}
+
+.dropdown-menu li a:hover {
+  background-color: red;
+}
+
+select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+form {
+  width:60%;
+}
+</style>
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#myPage"> 
+        <b><img src="b2.jpg" alt="Youth" style="width:80px;height:20px"> ONLINE INFORMATION WEBSITE FOR YOUTH</b>
+      </a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="YouthMainPage.html">HOME</a></li>
+        <li><a href="YouthMainPage.html">ABOUT US</a></li>
+        <li><a href="#profile">EDIT PROFILE</a></li>
+        <li><a href="youthnews.html">NEWS</a></li>
+        <li><a href="Main.html" id="logout">LOG OUT</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron text-center">
+  <h1>EDIT PROFILE</h1> 
+  <p>Edit your profile if you want to change something..</p> 
+  <br>
+</div>
+
+<div id="profile" class="container" align="center">
+  <form id="profileForm">
+    <div class="row">
+      <div class="col">
+        <label for="title">USER NAME</label><br>
+        <input type="text" name="username" value="natasya" placeholder="Your full name same as IC.." readonly>
+      </div><br>
+    </div>
+    
+    <div class="row">
+      <div class="col">
+        <label for="title">FULL NAME</label><br>
+        <input type="text" name="fullName" value="Nurul Natasya binti Abdul Rahim" placeholder="Your full name same as IC.." readonly>
+      </div><br>
+    </div>
+    
+    <div class="row">
+      <div class="col">
+        <label for="title">Email</label><br>
+        <input type="text" name="email" value="nurulntsya.work@gmail.com" placeholder="Your email.." readonly>
+      </div><br>
+    </div>
+     
+    <div class="row">	
+      <div class="col">
+        <label for="link">IC NUMBER</label><br>
+        <input type="text" name="icNum" value="001122334455" placeholder="Your ic number without ' - ' or 'space'.." readonly>
+      </div><br>
+    </div>
+
+    <div class="row">
+      <div class="col"><label for="description">PHONE NUMBER</label><br>
+        <input type="text" name="phoneNum" value="0162411024" placeholder="Your phone number without ' - '.." readonly>
+      </div><br>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="categoryTag">CATEGORY</label><br>
+        <select name="category" class="form-control" id="categorySelect" required> 
+          <option value="Information Technology (IT)">Information Technology (IT)</option>
+          <option value="Arts, Audio and Communication Technology">Arts, Audio and Communication Technology</option>
+          <option value="Business and Marketing">Business and Marketing</option>
+          <option value="Architecture and Construction">Architecture and Construction</option>
+          <option value="Human Services">Human Services</option>
+          <option value="Logistic">Logistic</option>
+          <option value="Agriculture">Agriculture</option>
+          <option value="Transportation">Transportation</option>
+          <option value="Manufacturing">Manufacturing</option>
+        </select>
+      </div>
+      <br>
+    </div>
+
+    <div class="row">
+      <input type="submit" name="submit_details" value="Update">
+    </div>
+  </form>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const username = localStorage.getItem('username');
+  
+  if (!username) {
+    window.location.href = 'YouthLogIn.html';
+    return;
+  }
+
+  document.querySelectorAll('input[type="text"]').forEach(input => {
+    input.addEventListener('click', function() {
+      alert("This is only for Demo purpose. Download full version from the github link to edit all fields.");
+    });
+  });
+
+  document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const category = document.getElementById('categorySelect').value;
+    alert(`Category updated to: ${category}\n(Demo only - no actual changes saved)`);
+  });
+
+  document.getElementById('logout').addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.removeItem('username');
+    window.location.href = 'Main.html';
+  });
+});
+</script>
+</body>
+</html>

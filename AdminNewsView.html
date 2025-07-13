@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<title>Admin View News</title>
+
+<style>
+ /* Responsive table container */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Minimum width before scrolling */
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #2d2d30;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        /* Action buttons */
+        .action-buttons {
+            white-space: nowrap; /* Prevent button wrapping */
+        }
+        
+        .action-buttons a {
+            margin: 0 5px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 6px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .action-buttons a.edit {
+            background-color: #007bff;
+        }
+        
+        .action-buttons a.edit:hover {
+            background-color: #0056b3;
+        }
+        
+        .action-buttons a.delete {
+            background-color: #dc3545;
+        }
+        
+        .action-buttons a.delete:hover {
+            background-color: #a71d2a;
+        }
+        
+        .action-buttons a.send-mail {
+            background-color: #28a745;
+        }
+        
+        .action-buttons a.send-mail:hover {
+            background-color: #1e7e34;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            /* Stack table headers on small screens */
+            table {
+                display: block;
+            }
+            
+            thead, tbody, th, td, tr {
+                display: block;
+            }
+            
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            tr {
+                border: 1px solid #ccc;
+                margin-bottom: 10px;
+            }
+            
+            td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+            }
+            
+            td:before {
+                position: absolute;
+                top: 12px;
+                left: 15px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+            }
+            
+            td:nth-of-type(1):before { content: "No."; }
+            td:nth-of-type(2):before { content: "Category"; }
+            td:nth-of-type(3):before { content: "Title"; }
+            td:nth-of-type(4):before { content: "Description"; }
+            td:nth-of-type(5):before { content: "Link"; }
+            td:nth-of-type(6):before { content: "Image"; }
+            td:nth-of-type(7):before { content: "Start Date"; }
+            td:nth-of-type(8):before { content: "End Date"; }
+            td:nth-of-type(9):before { content: "Actions"; }
+            
+            .action-buttons {
+                padding-left: 0;
+                text-align: center;
+            }
+            
+            .action-buttons a {
+                margin: 5px;
+            }
+        }
+
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    background-color: white;
+}
+.navbar {
+    font-family: Montserrat, sans-serif;
+    margin-bottom: 0;
+    background-color: #2d2d30;
+    border: 0;
+    font-size: 11px !important;
+    letter-spacing: 4px;
+    opacity: 0.9;
+}
+.navbar li a, .navbar .navbar-brand { 
+    color: #d5d5d5 !important;
+}
+.navbar-nav li a:hover {
+    color: #fff !important;
+}
+.navbar-nav li.active a {
+    color: #fff !important;
+    background-color: #29292c !important;
+}
+.jumbotron {
+    background-color: #2d2d30;
+    color: #fff;
+    padding: 100px 25px;
+    font-family: Montserrat, sans-serif;
+}
+table {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+th {
+    background-color: #2d2d30;
+    color: white;
+}
+tr:hover {
+    background-color: #f2f2f2;
+}
+td img {
+    width: 150px;
+    height: auto;
+}
+.action-buttons a {
+    margin: 0 5px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: inline-block;
+}
+.action-buttons a.edit {
+    background-color: #007bff;
+}
+.action-buttons a.edit:hover {
+    background-color: #0056b3;
+}
+.action-buttons a.delete {
+    background-color: #dc3545;
+}
+.action-buttons a.delete:hover {
+    background-color: #a71d2a;
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+}
+.bg-1 {
+    background: #2d2d30;
+    color: #bdbdbd;
+    padding: 50px 0;
+}
+.bg-1 h3 {
+    color: #fff;
+}
+.bg-1 a {
+    color: #fff;
+    text-decoration: none;
+}
+.bg-1 a:hover {
+    color: #ddd;
+}
+.action-buttons a.send-mail {
+    background-color: #28a745;
+}
+.action-buttons a.send-mail:hover {
+    background-color: #1e7e34;
+}
+.modal-loading {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content-loading {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.filter-container {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.filter-container label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+.filter-container select, .filter-container input {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-right: 15px;
+}
+.filter-container button {
+    padding: 8px 15px;
+    background-color: #2d2d30;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.filter-container button:hover {
+    background-color: #1a1a1c;
+}
+.recently-sent {
+    background-color: #e8f5e9 !important;
+    transition: background-color 2s ease-out;
+}
+.recently-deleted {
+    background-color: #ffebee !important;
+    transition: background-color 2s ease-out;
+}
+.notification-box {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+}
+.notification-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+.notification-error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+</style>
+</head>
+
+<body id="myPage">
+
+<div id="loadingModal" class="modal-loading">
+    <div class="modal-content-loading">
+        <div class="loader"></div>
+        <h3>Sending Emails...</h3>
+        <p>Please wait while we send the emails to all recipients.</p>
+        <p>This may take a few moments.</p>
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#myPage">
+                <b><img src="youthLogoo.png" alt="Logo" style="width:80px;height:20px"> ONLINE INFORMATION WEBSITE FOR YOUTH</b>
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="AdminOptionPage.html">HOME</a></li>
+                <li><a href="AdminOptionPage.html">ABOUT US</a></li>
+                <li><a href="#action">ACTION</a></li>
+                <li><a href="index.html" onclick="logout()">LOG OUT</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="jumbotron text-center">
+    <h1>VIEW NEWS</h1>
+    <p>All the created news will be displayed here. You can choose to edit or delete the news.</p>
+</div>
+
+<div class="container">
+    <div id="notification" class="alert" style="display:none;"></div>
+
+    <div class="filter-container">
+        <div class="row">
+            <div align="right">
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="Arts, Audio and Communication Technology">Arts, Audio and Communication Technology</option>
+                    <option value="Business and Marketing">Business and Marketing</option>
+                    <option value="Architecture and Construction">Architecture and Construction</option>
+                    <option value="Human Services">Human Services</option>
+                    <option value="Information Technology (IT)">Information Technology (IT)</option>
+                    <option value="Logistic">Logistic</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Manufacturing">Manufacturing</option>
+                </select>
+                <button onclick="applyFilters()">Apply Filters</button>
+                <button onclick="resetFilters()" style="margin-left: 10px;">Reset Filters</button>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Category</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Link</th>
+                <th>Image</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="newsTableBody">
+            <tr data-id="1">
+                <td>1</td>
+                <td>Information Technology (IT)</td>
+                <td>Youth IT Workshop</td>
+                <td style="text-align:left;">Join our free IT workshop for youth to learn about web development and programming basics. No prior experience required. Limited seats available!</td>
+                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                    <a href="#" target="_blank">https://DemoOnly.com</a>
+                </td>
+                <td><img src="a36.jpg" alt="Tech Conference"/></td>
+                <td>2023-07-15</td>
+                <td>2023-07-17</td>
+                <td class="action-buttons">
+                    <a class="edit" title="Edit" onclick="showDemoAlert()"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a class="delete" href="#" onclick="deleteNews(1, this)" title="Delete"><i class="fa-solid fa-trash"></i></a>
+                    <a class="send-mail" href="#" onclick="sendEmail(1, 'Information Technology (IT)', this)" title="Send Mail"><i class="fa-solid fa-envelope"></i></a>
+                </td>
+            </tr>
+            <tr data-id="2">
+                <td>2</td>
+                <td>Business and Marketing</td>
+                <td>Business Pitch Competition</td>
+                <td style="text-align:left;">Calling all young entrepreneurs! Participate in our annual business pitch competition with cash prizes up to RM10,000 for the best ideas.</td>
+                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                    <a href="#" target="_blank">https://DemoOnly.edu</a>
+                </td>
+                <td><img src="a44.jpg" alt="Marketing Workshop"/></td>
+                <td>2023-07-01</td>
+                <td>2023-07-03</td>
+                <td class="action-buttons">
+                    <a class="edit" title="Edit" onclick="showDemoAlert()"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a class="delete" href="#" onclick="deleteNews(2, this)" title="Delete"><i class="fa-solid fa-trash"></i></a>
+                    <a class="send-mail" href="#" onclick="sendEmail(2, 'Business and Marketing', this)" title="Send Mail"><i class="fa-solid fa-envelope"></i></a>
+                </td>
+            </tr>
+            <tr data-id="3">
+                <td>3</td>
+                <td>Agriculture</td>
+                <td>Agrucylture Innovation Fair</td>
+                <td style="text-align:left;">Discover the latest innovations in agriculture technology at our youth-focused fair. Meet industry experts and learn about career opportunities.</td>
+                <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+                    <a href="#" target="_blank">https://DemoOnly.edu</a>
+                </td>
+                <td><img src="i2.jpg" alt="Marketing Workshop"/></td>
+                <td>2023-07-20</td>
+                <td>2023-07-22</td>
+                <td class="action-buttons">
+                    <a class="edit" title="Edit" onclick="showDemoAlert()"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a class="delete" href="#" onclick="deleteNews(2, this)" title="Delete"><i class="fa-solid fa-trash"></i></a>
+                    <a class="send-mail" href="#" onclick="sendEmail(2, 'Business and Marketing', this)" title="Send Mail"><i class="fa-solid fa-envelope"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br><br>
+</div>
+
+<div id="action" class="bg-1" align="center"> 
+    <div class="container">
+        <h3 class="text-center">ADMIN</h3> <br>
+        <p class="text-center"><em>SELECT WHAT TO DO :</em></p><br>
+        <div class="col-md-12 form-group">
+            <button class="btn pull-center" type="submit" style="width:100%" onclick="showDemoAlert()">
+                <span style="color:grey;font-size:20px;">CREATE NEWS</span>
+            </button>
+        </div>
+        <div class="col-md-12 form-group">
+            <button class="btn pull-center" type="submit" style="width:100%" onclick="showDemoAlert()">
+                <span style="color:grey;font-size:20px;">VIEW YOUTH DATA</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function showDemoAlert() {
+    alert("This function doesn't work as this is only a DEMO");
+    return false; 
+}
+</script>
+
+<!--delete demo-->
+<script>
+function deleteNews(id, element) {
+    if (confirm('Are you sure you want to delete this item? (This is just a demo)')) {
+        // Get the table row
+        const row = element.closest('tr');
+        
+        // Visual feedback
+        row.classList.add('recently-deleted');
+        
+        // Simulate deletion after a short delay
+        setTimeout(() => {
+            row.style.display = 'none';
+            alert('Item deleted (demo only - nothing was actually removed)');
+        }, 1000);
+    }
+}
+</script>
+
+<script>
+let currentNewsRow = null;
+
+function sendEmail(id, category, element) {
+    currentNewsRow = element.closest('tr');
+    
+    document.getElementById('loadingModal').style.display = 'block';
+    
+    setTimeout(() => {
+        document.getElementById('loadingModal').style.display = 'none';
+        
+        currentNewsRow.classList.add('recently-sent');
+        setTimeout(() => {
+            currentNewsRow.classList.remove('recently-sent');
+        }, 2000);
+        
+        alert('This would send news about:\n\n' + 
+              'Title: ' + currentNewsRow.cells[2].textContent + '\n' +
+              'Description: ' + currentNewsRow.cells[3].textContent + '\n' +
+              'Category: ' + currentNewsRow.cells[1].textContent + '\n' +
+              'End-Date: ' + currentNewsRow.cells[7].textContent + '\n' +
+              'Link: ' + currentNewsRow.cells[4].querySelector('a').href);
+        
+        currentNewsRow = null;
+    }, 2000);
+}
+
+function logout() {
+    sessionStorage.removeItem('loggedInUsername');
+}
+
+function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    notification.textContent = message;
+    notification.className = 'alert alert-' + type;
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
+}
+
+function deleteNews(id) {
+    if(confirm('Are you sure to delete this news?')) {
+        const row = document.querySelector('tr[data-id="' + id + '"]');
+        if (row) {
+            row.style.display = 'none';
+            showNotification('The news item has been successfully deleted.', 'success');
+        }
+    }
+}
+
+function applyFilters() {
+    const category = document.getElementById('categoryFilter').value;
+    const rows = document.querySelectorAll('#newsTableBody tr');
+    
+    rows.forEach(row => {
+        const rowCategory = row.cells[1].textContent;
+        if (category === '' || rowCategory === category) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+function resetFilters() {
+    document.getElementById('categoryFilter').value = '';
+    const rows = document.querySelectorAll('#newsTableBody tr');
+    rows.forEach(row => {
+        row.style.display = '';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const username = sessionStorage.getItem('loggedInUsername');
+    if (username !== 'admin') {
+        window.location.href = 'Adminloginpage.html';
+    }
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('sent')) {
+        showNotification('Email successfully sent to demo users', 'success');
+    }
+    if (urlParams.has('deleted')) {
+        showNotification('The news item has been successfully deleted.', 'success');
+    }
+});
+</script>
+</body>
+</html>
