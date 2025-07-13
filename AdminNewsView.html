@@ -549,7 +549,7 @@ function sendEmail(id, category, element) {
               'Description: ' + currentNewsRow.cells[3].textContent + '\n' +
               'Category: ' + currentNewsRow.cells[1].textContent + '\n' +
               'End-Date: ' + currentNewsRow.cells[7].textContent + '\n' +
-              'Link: ' + currentNewsRow.cells[4].querySelector('a').href);
+              'Link: ' + currentNewsRow.cells[4].querySelector('a'));
         
         currentNewsRow = null;
     }, 2000);
