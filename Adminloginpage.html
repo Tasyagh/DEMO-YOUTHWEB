@@ -85,21 +85,6 @@ form {
   padding: 100px 25px;
 }
 </style>
-  <script>
-    function validateLogin() {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      
-      if (username === 'admin' && password === 'admin') {
-        // Store username in sessionStorage to pass to next page
-        sessionStorage.setItem('loggedInUsername', username);
-        return true;
-      } else {
-        alert('Invalid credentials. Please use admin/admin');
-        return false;
-      }
-    }
-  </script>
 </head>
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -137,7 +122,7 @@ form {
   
   <div class="container" align="center">
     <center>
-      <form method="post" action="AdminOptionPage.html" onsubmit="return validateLogin()">
+      <form id="loginForm">
         <div class="input-group">
           <br><br><br>
           <label for="username"><b>Username</b></label><br>
@@ -156,5 +141,21 @@ form {
     </center>
     <br><br>
   </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if (username === 'admin' && password === 'admin') {
+        sessionStorage.setItem('loggedInUsername', username);
+        window.location.href = 'AdminOptionPage.html';
+      } else {
+        alert('Invalid credentials. Please use admin/admin');
+      }
+    });
+  </script>
 </body>
 </html>
